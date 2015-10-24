@@ -3,6 +3,10 @@
 //exports.bindaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 exports.port = 8000;
 
+exports.serverid: 'bigbang';
+
+exports.servertoken: '0TwuOGEW7H3z';
+
 // proxyip - proxy IPs with trusted X-Forwarded-For headers
 //   This can be either false (meaning not to trust any proxies) or an array
 //   of strings. Each string should be either an IP address or a subnet given
@@ -127,7 +131,7 @@ exports.consoleips = ['127.0.0.1'];
 // then the config.js file will be reloaded when it is changed.
 // This can be used to change some settings using a text editor on
 // the server.
-exports.watchconfig = false;
+exports.watchconfig = true;
 
 // logchat - whether to log chat rooms.
 exports.logchat = false;
