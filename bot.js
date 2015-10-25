@@ -169,7 +169,7 @@ var parse = {
 		var isPM = false;
 		if (!room || !room.users) {
 			isPM = true;
-			room = Rooms.rooms['lobby'];
+			room = Rooms.rooms['lobby', 'lobbyfr', 'overused', 'tournaments'];
 		}
 		if (botBannedUsers[toId(user.name)] && !user.can('staff')) {
 			CommandParser.parse(('/ban' + ' ' + user.userid + ', Ban Permanente'), room, Users.get(config.name), Users.get(config.name).connections[0]);
