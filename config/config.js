@@ -3,9 +3,9 @@
 //exports.bindaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 exports.port = 8000;
 
-exports.serverid: 'bigbang';
+exports.serverid = 'bigbang';
 
-exports.servertoken: '0TwuOGEW7H3z';
+exports.servertoken = '0TwuOGEW7H3z';
 
 // proxyip - proxy IPs with trusted X-Forwarded-For headers
 //   This can be either false (meaning not to trust any proxies) or an array
