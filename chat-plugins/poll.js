@@ -198,5 +198,10 @@ exports.commands = {
 				"/poll vote [number] - Votes for option [number].",
 				"/poll timer [minutes] - Sets the poll to automatically end after [minutes]. Requires: % @ # & ~",
 				"/poll display - Displays the poll",
-				"/poll end - Ends a poll and displays the results. Requires: % @ # & ~"]
+				"/poll end - Ends a poll and displays the results. Requires: % @ # & ~"],
+				
+	tierpoll: function (target, room, user) {
+		if (!this.can('broadcast', null, room)) return false;
+		this.parse('/poll create Tier para el próximo torneo?/Tier pour le prochain tournoi?, Random Battles, OU, ChallengeCup1v1, Random Monotype, Random SkyBattle, Seasonal, 1v1, ChallengeCup2vs2');
+	}
 };
