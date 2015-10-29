@@ -268,6 +268,17 @@ exports.commands = {
 					if (this.broadcasting) return this.errorReply("ERROR: this command is too spammy to broadcast.  Use / instead of ! to see it for yourself.");
 					this.sendReplyBox("BigBang.emoticons.chatEmotes = " + fs.readFileSync('config/emotes.json','utf8'));
 					break;
+					
+				case 'max':
+				case 'maxemotes':
+					if (!this.can('hotpatch')) return false;
+					if (!parts[1]) return this.errorReply("Usage: /emote max, [max emotes per message].");
+					if (Number(parts[1]) < 1) return this.errorReply("Max emotes cannot be less than 1.");
+					if (isNaN(Number(parts[1]))) return this.errorReply("The max emotes must be a number.");
+					if (~String(parts[1]).indexOf('.')) return this.errorReply("Cannot contain a decimal.");
+					Gold.emoticons.maxChatEmotes = parts[1];
+					this.privateModCommand("(" + user.name + " has set the max emoticons per message to be " + parts[1] + ".)");
+					break;
 
 				case 'modchat':
 					if (!parts[1]) parts[1] = "status";
@@ -327,6 +338,7 @@ exports.commands = {
 							"/emote <code>list</code> - Shows the chat emoticons in a list form.<br />" +
 							"/emote <code>view</code> - Shows all of the current chat emoticons with the respected image.<br />" +
 							"/emote <code>object</code> - Shows the object of BigBang.emoticons.chatEmotes. (Mostly for development usage)<br />" +
+							"/emote <code>max, [max emotes / message]</code> - Sets the max emoticon messages per chat message.  Requires ~.<br />" +
 							"/emote <code>help</code> - Shows this help command.<br />" +
 						"</td></table>"
 					);
