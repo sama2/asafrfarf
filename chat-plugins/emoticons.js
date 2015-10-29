@@ -3,7 +3,7 @@
  * You will need a line in parser to actually 
  * parse this so that it works. (See command-parser.js)
  * Also, you will need a few lines for the PM command to make it work in PMs.
- * Credits: Darkero
+ * Credits: Darkero.
  *
  * Features:
  * - Emoticon Moderated chat (for chat and battle rooms)
