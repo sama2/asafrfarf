@@ -1,16 +1,5 @@
 exports.commands = {
 
-seen: function (target, room, user) {
-		if (!this.canBroadcast()) return;
-		if (!target) return this.parse('/help seen');
-		var targetUser = Users.get(target);
-		if (targetUser && targetUser.connected) return this.sendReplyBox(targetUser.name + " is <b>currently online</b>.");
-		target = Tools.escapeHTML(target);
-		var seen = Db('seen')[toId(target)];
-		if (!seen) return this.sendReplyBox(target + " has never been online on this server.");
-		this.sendReplyBox(target + " was last seen <b>" + moment(seen).fromNow() + "</b>.");
-	},
-	seenhelp: ["/seen - Shows when the user last connected on the server."],
 
 	tell: function (target, room, user, connection) {
 		if (!target) return this.parse('/help tell');
