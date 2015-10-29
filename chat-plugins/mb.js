@@ -1,6 +1,4 @@
 /* Music Box chat-plugin
- * parses links into the HTML for music boxes
- * by BlizzardQ
  */
 
 var https = require("https");
