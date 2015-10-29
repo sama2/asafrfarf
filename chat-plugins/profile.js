@@ -1,7 +1,7 @@
 /* Profile chat-plugin 
- * by jd, modified by panpawn
+ * by Master Float and Darkero
  */
-var serverIp = '167.114.155.242';
+var serverIp = '52.26.71.55';
 var http = require('http');
 var formatHex = '#000000'; //hex code for the formatting of the command
 var geoip = require('geoip-ultralight');
@@ -100,11 +100,11 @@ exports.commands = {
 		}
 		function showProfile() {
 			var seenOutput = '';
-			if (!Gold.seenData[userid]) seenOutput = "Never";
-			var date = new Date(Gold.seenData[userid]);
-			if (Gold.seenData[userid]) {
+			if (!BigBang.seenData[userid]) seenOutput = "Never";
+			var date = new Date(BigBang.seenData[userid]);
+			if (BigBang.seenData[userid]) {
 				seenOutput = date.toUTCString() + " ";
-				var seconds = Math.floor(((Date.now() - Gold.seenData[userid]) / 1000));
+				var seconds = Math.floor(((Date.now() - BigBang.seenData[userid]) / 1000));
 				var minutes = Math.floor((seconds / 60));
 				var hours = Math.floor((minutes / 60));
 				var days = Math.floor((hours / 24));
@@ -129,11 +129,11 @@ exports.commands = {
 					
 			var profile = '';
 			profile += '<img src="' + avatar + '" height=80 width=80 align=left>';
-			if (!getFlag(toId(username))) profile += '&nbsp;<font color=' + formatHex + '><b>Name:</b></font> <b><font color="' + Gold.hashColor(toId(username)) + '">' + Tools.escapeHTML(username) + '</font></b><br />';
-			if (getFlag(toId(username))) profile += '&nbsp;<font color=' + formatHex + '><b>Name:</b></font> <b><font color="' + Gold.hashColor(toId(username)) + '">' + Tools.escapeHTML(username) + '</font></b>' + getFlag(toId(username)) + '<br />';
+			if (!getFlag(toId(username))) profile += '&nbsp;<font color=' + formatHex + '><b>Name:</b></font> <b><font color="' + BigBang.hashColor(toId(username)) + '">' + Tools.escapeHTML(username) + '</font></b><br />';
+			if (getFlag(toId(username))) profile += '&nbsp;<font color=' + formatHex + '><b>Name:</b></font> <b><font color="' + BigBang.hashColor(toId(username)) + '">' + Tools.escapeHTML(username) + '</font></b>' + getFlag(toId(username)) + '<br />';
 			profile += '&nbsp;<font color=' + formatHex + '><b>Registered:</b></font> ' + regdate + '<br />';
-			if (!Gold.hasBadge(userid,'vip')) profile += '&nbsp;<font color=' + formatHex + '><b>Rank:</b></font> ' + userGroup + '<br />';
-			if (Gold.hasBadge(userid,'vip')) profile += '&nbsp;<font color=' + formatHex + '><b>Rank:</b></font> ' + userGroup + ' (<font color=#6390F0><b>VIP User</b></font>)<br />';
+			if (!BigBang.hasBadge(userid,'vip')) profile += '&nbsp;<font color=' + formatHex + '><b>Rank:</b></font> ' + userGroup + '<br />';
+			if (BigBang.hasBadge(userid,'vip')) profile += '&nbsp;<font color=' + formatHex + '><b>Rank:</b></font> ' + userGroup + ' (<font color=#6390F0><b>VIP User</b></font>)<br />';
 			if (bucks) profile += '&nbsp;<font color=' + formatHex + '><b>Bucks: </font></b>' + bucks + '<br />';
 			if (online && lastActive(toId(username))) profile += '&nbsp;<font color=' + formatHex + '><b>Last Active:</b></font> ' + lastActive(toId(username)) + '<br />';
 			if (!online) profile += '&nbsp;<font color=' + formatHex + '><b>Last Online: </font></b>' + seenOutput + '<br />';
