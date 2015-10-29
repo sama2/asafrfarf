@@ -1,7 +1,3 @@
-/* Dice commands chat-plugin
- * by jd
-*/
-
 exports.commands = {
 	gambledicehelp: function(target, room, user) {
 		if (!this.canBroadcast()) return;
