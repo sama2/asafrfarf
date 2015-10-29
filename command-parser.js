@@ -160,7 +160,7 @@ function canTalk(user, room, connection, message, targetUser) {
 		}
 		//servers Spam
 		if (!user.can('bypassall') && Rooms('spam')) {
-			var serverexceptions = {'lumen': 1, 'showdown': 1, 'smogtours': 1};
+			var serverexceptions = {'lumen': 1, 'showdown': 1, 'smogtours': 1, 'bigbang': 1, 'lqp': 1};
 			if (Config.serverexceptions) {
 				for (var i in Config.serverexceptions) serverexceptions[i] = 1;
 			}
