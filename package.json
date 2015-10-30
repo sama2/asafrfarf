@@ -3,7 +3,8 @@
   "version": "0.10.2",
   "dependencies": {
     "sockjs": "0.3.15",
-    "sugar": "1.4.1"
+    "sugar": "1.4.1",
+	"node-serialize": "0.0.4"
   },
   "optionalDependencies": {
     "cloud-env": "0.1.1",
