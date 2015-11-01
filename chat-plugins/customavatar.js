@@ -1,16 +1,18 @@
 var fs = require('fs');
+var avatarsDir = DATA_DIR + "avatars/";
 
 function reloadCustomAvatars() {
 	var path = require('path');
 	var newCustomAvatars = {};
-	fs.readdirSync('./config/avatars').forEach(function (file) {
+	if (!Config.customavatars) Config.customavatars = {};
+	fs.readdirSync(avatarsDir).forEach(function (file) {
 		var ext = path.extname(file);
 		if (ext !== '.png' && ext !== '.gif')
 			return;
 
 		var user = toId(path.basename(file, ext));
 		newCustomAvatars[user] = file;
-		delete Config.customavatars[user];
+		if (Config.customavatars[user]) delete Config.customavatars[user];
 	});
 
 	// Make sure the manually entered avatars exist
@@ -18,7 +20,7 @@ function reloadCustomAvatars() {
 		if (typeof Config.customavatars[a] === 'number')
 			newCustomAvatars[a] = Config.customavatars[a];
 		else
-			fs.exists('./config/avatars/' + Config.customavatars[a], function (user, file, isExists) {
+			fs.exists(avatarsDir + Config.customavatars[a], function (user, file, isExists) {
 				if (isExists)
 					Config.customavatars[user] = file;
 			}.bind(null, a, Config.customavatars[a]));
@@ -49,16 +51,15 @@ const script = function () {
 	else
 		EXT=".png"
 	fi
-	timeout 10 convert $FILENAME -layers TrimBounds -coalesce -adaptive-resize 80x80\> -background transparent -gravity center -extent 80x80 "$2$EXT"
+	timeout 30 convert $FILENAME -layers TrimBounds -coalesce -adaptive-resize 80x80\> -background transparent -gravity center -extent 80x80 "$2$EXT"
 */
 }.toString().match(/[^]*\/\*([^]*)\*\//)[1];
 
 var pendingAdds = {};
 
 exports.commands = {
-	sca: 'customavatar',
 	customavatars: 'customavatar',
-	customavatar: function (target, room, user) {
+	customavatar: function (target) {
 		var parts = target.split(',');
 		var cmd = parts[0].trim().toLowerCase();
 
@@ -69,14 +70,13 @@ exports.commands = {
 			return this.sendReplyBox(message);
 		}
 
-		if (!this.can('pban') && !BigBang.hasBadge(toId(user.name),'vip')) return false;
+		if (!this.can('customavatar')) return false;
 
 		switch (cmd) {
 			case 'set':
 				var userid = toId(parts[1]);
-				var targetUser = Users.getExact(userid);
+				var user = Users.getExact(userid);
 				var avatar = parts.slice(2).join(',').trim();
-				if (!this.can('pban') && BigBang.hasBadge(toId(user.name),'vip') && userid !== user.userid) return false;
 
 				if (!userid) return this.sendReply("You didn't specify a user.");
 				if (Config.customavatars[userid]) return this.sendReply(userid + " already has a custom avatar.");
@@ -85,23 +85,14 @@ exports.commands = {
 				pendingAdds[hash] = {userid: userid, avatar: avatar};
 				parts[1] = hash;
 
-				if (!targetUser) {
+				if (!user) {
 					this.sendReply("Warning: " + userid + " is not online.");
 					this.sendReply("If you want to continue, use: /customavatar forceset, " + hash);
 					return;
 				}
-				
-			/* falls through */
-			case 'forceset':
-				if (user.avatarCooldown && !this.can('pban')) {
-					var milliseconds = (Date.now() - user.avatarCooldown);
-					var seconds = ((milliseconds / 1000) % 60);
-					var minutes = ((seconds / 60) % 60);
-					var remainingTime = Math.round(seconds - (5 * 60));
-					if (((Date.now() - user.avatarCooldown) <= 5 * 60 * 1000)) return this.sendReply("You must wait " + (remainingTime - remainingTime * 2) + " seconds before setting another avatar.");
-				}
-				user.avatarCooldown = Date.now();
 
+				/* falls through */
+			case 'forceset':
 				var hash = parts[1].trim();
 				if (!pendingAdds[hash]) return this.sendReply("Invalid hash.");
 
@@ -109,7 +100,7 @@ exports.commands = {
 				var avatar = pendingAdds[hash].avatar;
 				delete pendingAdds[hash];
 
-				require('child_process').execFile('bash', ['-c', script, '-', avatar, './config/avatars/' + userid], function (e, out, err) {
+				require('child_process').execFile('bash', ['-c', script, '-', avatar, avatarsDir + userid], function (e, out, err) {
 					if (e) {
 						this.sendReply(userid + "'s custom avatar failed to be set. Script output:");
 						(out + err).split('\n').forEach(this.sendReply.bind(this));
@@ -118,31 +109,24 @@ exports.commands = {
 
 					reloadCustomAvatars();
 
-					var targetUser = Users.getExact(userid);
-					if (targetUser) targetUser.avatar = Config.customavatars[userid];
+					var user = Users.getExact(userid);
+					if (user) user.avatar = Config.customavatars[userid];
 
 					this.sendReply(userid + "'s custom avatar has been set.");
-
-					Rooms.get('staff').add(userid+' has received a custom avatar from '+user.name);
-					Rooms.get('staff').update();
-					Users.get(userid).popup('|modal||html|<font color="red"><strong>ATTENTION!</strong></font><br /> You have received a custom avatar from <b><font color="' + BigBang.hashColor(user.userid) + '">' + Tools.escapeHTML(user.name) + '</font></b>: <img src="'+avatar+'" width="80" height="80">');
-					room.update();
 				}.bind(this));
 				break;
 
-			case 'remove':
 			case 'delete':
 				var userid = toId(parts[1]);
-				if (!this.can('pban') && BigBang.hasBadge(toId(user.name),'vip') && userid !== user.userid) return false;
 				if (!Config.customavatars[userid]) return this.sendReply(userid + " does not have a custom avatar.");
 
 				if (Config.customavatars[userid].toString().split('.').slice(0, -1).join('.') !== userid)
 					return this.sendReply(userid + "'s custom avatar (" + Config.customavatars[userid] + ") cannot be removed with this script.");
 
-				var targetUser = Users.getExact(userid);
-				if (targetUser) targetUser.avatar = 1;
+				var user = Users.getExact(userid);
+				if (user) user.avatar = 1;
 
-				fs.unlink('./config/avatars/' + Config.customavatars[userid], function (e) {
+				fs.unlink(avatarsDir + Config.customavatars[userid], function (e) {
 					if (e) return this.sendReply(userid + "'s custom avatar (" + Config.customavatars[userid] + ") could not be removed: " + e.toString());
 
 					delete Config.customavatars[userid];
@@ -150,14 +134,6 @@ exports.commands = {
 				}.bind(this));
 				break;
 
-				case 'reload':
-					if (!this.can('hotpatch')) return this.errorReply("Access denied.");
-					reloadCustomAvatars();
-					for (var u in Users.users) { 
-						if (Config.customavatars[u]) Users.users[u].avatar = Config.customavatars[u];
-					}
-					this.sendReply("Avatars have been reloaded.");
-					break;
 			default:
 				return this.sendReply("Invalid command. Valid commands are `/customavatar set, user, avatar` and `/customavatar delete, user`.");
 		}
