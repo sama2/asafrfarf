@@ -19,7 +19,7 @@ exports.proxyip = ['127.0.0.0/8'];
 //   in every Random Battle team.
 exports.potd = '';
 exports.superAdmins = {
-	"brekfree": 1
+	"darkero": 1
 };
 
 // crash guard - write errors to log file instead of crashing
@@ -315,20 +315,12 @@ exports.grouplist = [
 		joinbattle: true
 	},
 	{
-		symbol: '\u00A5',
-		id: "youtuber",
-		name: "Youtuber",
-		inherit: '\u2295',
-		jurisdiction: 'u',
-		youtube: true,
-		warn: true,
-		kick: true
-	},
-	{
-		symbol: '\u2295',
+		symbol: '$',
 		id: "operator",
 		name: "Operator",
 		inherit: '+',
+		jurisdiction: 'u',
+		warn: true,
 		tournamentsmoderation: true,
 		tournaments: true
 	},
@@ -338,13 +330,6 @@ exports.grouplist = [
 		name: "Voice",
 		inherit: '$',
 		joinbattle: true,
-		broadcast: true
-	},
-	{
-		symbol: '$',
-		id: "destacado",
-		name: "Destacado",
-		inherit: ' ',
 		broadcast: true
 	},
 	{
