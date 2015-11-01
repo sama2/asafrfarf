@@ -361,7 +361,7 @@ var commands = exports.commands = {
 		this.sendReply(buffer);
 	},
 	datahelp: ["/data [pokemon/item/move/ability] - Get details on this pokemon/item/move/ability/nature.",
-		"!data [pokemon/item/move/ability] - Show everyone these details. Requires: + % @ # & ~"],
+		"!data [pokemon/item/move/ability] - Show everyone these details. Requires: + $ % @ # & ~"],
 
 	dt: 'details',
 	details: function (target) {
@@ -369,7 +369,7 @@ var commands = exports.commands = {
 		this.run('data');
 	},
 	detailshelp: ["/details [pokemon] - Get additional details on this pokemon/item/move/ability/nature.",
-		"!details [pokemon] - Show everyone these details. Requires: + % @ # & ~"],
+		"!details [pokemon] - Show everyone these details. Requires: + $ % @ # & ~"],
 
 	ds: 'dexsearch',
 	dsearch: 'dexsearch',
@@ -1416,7 +1416,7 @@ var commands = exports.commands = {
 		this.sendReplyBox(buffer);
 	},
 	learnhelp: ["/learn [pokemon], [move, move, ...] - Displays how a Pok\u00e9mon can learn the given moves, if it can at all.",
-		"!learn [pokemon], [move, move, ...] - Show everyone that information. Requires: + % @ # & ~"],
+		"!learn [pokemon], [move, move, ...] - Show everyone that information. Requires: + $ % @ # & ~"],
 
 	weaknesses: 'weakness',
 	weak: 'weakness',
@@ -1478,8 +1478,8 @@ var commands = exports.commands = {
 	},
 	weaknesshelp: ["/weakness [pokemon] - Provides a Pok\u00e9mon's resistances, weaknesses, and immunities, ignoring abilities.",
 		"/weakness [type 1]/[type 2] - Provides a type or type combination's resistances, weaknesses, and immunities, ignoring abilities.",
-		"!weakness [pokemon] - Shows everyone a Pok\u00e9mon's resistances, weaknesses, and immunities, ignoring abilities. Requires: + % @ # & ~",
-		"!weakness [type 1]/[type 2] - Shows everyone a type or type combination's resistances, weaknesses, and immunities, ignoring abilities. Requires: + % @ # & ~"],
+		"!weakness [pokemon] - Shows everyone a Pok\u00e9mon's resistances, weaknesses, and immunities, ignoring abilities. Requires: + $ % @ # & ~",
+		"!weakness [type 1]/[type 2] - Shows everyone a type or type combination's resistances, weaknesses, and immunities, ignoring abilities. Requires: + $ % @ # & ~"],
 
 	eff: 'effectiveness',
 	type: 'effectiveness',
@@ -1941,10 +1941,8 @@ var commands = exports.commands = {
 	groups: function (target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox(
-			"$ <b>Destacado</b> - They can use ! commands like !groups<br />" +
-			"+ <b>Voice</b> - They can also join battles and talk during moderated chat<br />" +
-			"\u2295 <b>Operator</b> - They can also create and manage tournaments<br />" +
-			"\u00A5 <b>Youtuber</b> - They can also warn users<br />" +
+			"+ <b>Voice</b> - They can use ! commands like !groups, join battles and talk during moderated chat<br />" +
+			"$ <b>Operator</b> - They can also warn users, create and manage tournaments<br />" +
 			"% <b>Driver</b> - The above, and they can mute. Global % can also lock users and check for alts<br />" +
 			"@ <b>Moderator</b> - The above, and they can ban users<br />" +
 			"\u2605 <b>Player</b> - Especial rank only for battles. They can put the modchat and promote to room voiced<br />" +
@@ -1953,8 +1951,8 @@ var commands = exports.commands = {
 			"~ <b>Administrator</b> - They can do anything, like change what this message says"
 		);
 	},
-	groupshelp: ["/groups - Explains what the + % @ # & next to people's names mean.",
-		"!groups - Shows everyone that information. Requires: + % @ # & ~"],
+	groupshelp: ["/groups - Explains what the + $ % @ # & next to people's names mean.",
+		"!groups - Shows everyone that information. Requires: + $ % @ # & ~"],
 
 	repo: 'opensource',
 	repository: 'opensource',
@@ -1970,7 +1968,7 @@ var commands = exports.commands = {
 		);
 	},
 	opensourcehelp: ["/opensource - Links to PS's source code repository.",
-		"!opensource - Show everyone that information. Requires: + % @ # & ~"],
+		"!opensource - Show everyone that information. Requires: + $ % @ # & ~"],
 
 	staff: function (target, room, user) {
 		if (!this.canBroadcast()) return;
@@ -2006,7 +2004,7 @@ var commands = exports.commands = {
 		this.sendReplyBox("You can <button name=\"avatars\">change your avatar</button> by clicking on it in the <button name=\"openOptions\"><i class=\"fa fa-cog\"></i> Options</button> menu in the upper right. Custom avatars are only obtainable by staff.");
 	},
 	avatarshelp: ["/avatars - Explains how to change avatars.",
-		"!avatars - Show everyone that information. Requires: + % @ # & ~"],
+		"!avatars - Show everyone that information. Requires: + $ % @ # & ~"],
 
 	introduction: 'intro',
 	intro: function (target, room, user) {
@@ -2020,7 +2018,7 @@ var commands = exports.commands = {
 		);
 	},
 	introhelp: ["/intro - Provides an introduction to competitive Pok\u00e9mon.",
-		"!intro - Show everyone that information. Requires: + % @ # & ~"],
+		"!intro - Show everyone that information. Requires: + $ % @ # & ~"],
 
 	mentoring: 'smogintro',
 	smogonintro: 'smogintro',
@@ -2042,7 +2040,7 @@ var commands = exports.commands = {
 		);
 	},
 	calchelp: ["/calc - Provides a link to a damage calculator",
-		"!calc - Shows everyone a link to a damage calculator. Requires: + % @ # & ~"],
+		"!calc - Shows everyone a link to a damage calculator. Requires: + $ % @ # & ~"],
 
 	capintro: 'cap',
 	cap: function (target, room, user) {
@@ -2056,7 +2054,7 @@ var commands = exports.commands = {
 		);
 	},
 	caphelp: ["/cap - Provides an introduction to the Create-A-Pok&eacute;mon project.",
-		"!cap - Show everyone that information. Requires: + % @ # & ~"],
+		"!cap - Show everyone that information. Requires: + $ % @ # & ~"],
 
 	gennext: function (target, room, user) {
 		if (!this.canBroadcast()) return;
@@ -2107,7 +2105,7 @@ var commands = exports.commands = {
 		}
 	},
 	othermetashelp: ["/om - Provides links to information on the Other Metagames.",
-		"!om - Show everyone that information. Requires: + % @ # & ~"],
+		"!om - Show everyone that information. Requires: + $ % @ # & ~"],
 
 	banlists: 'formathelp',
 	tier: 'formathelp',
@@ -2324,7 +2322,7 @@ var commands = exports.commands = {
 		this.sendReplyBox(buffer);
 	},
 	faqhelp: ["/faq [theme] - Provides a link to the FAQ. Add deviation, doubles, randomcap, restart, or staff for a link to these questions. Add all for all of them.",
-		"!faq [theme] - Shows everyone a link to the FAQ. Add deviation, doubles, randomcap, restart, or staff for a link to these questions. Add all for all of them. Requires: + % @ # & ~"],
+		"!faq [theme] - Shows everyone a link to the FAQ. Add deviation, doubles, randomcap, restart, or staff for a link to these questions. Add all for all of them. Requires: + $ % @ # & ~"],
 
 	analysis: 'smogdex',
 	strategy: 'smogdex',
@@ -2432,7 +2430,7 @@ var commands = exports.commands = {
 		}
 	},
 	smogdexhelp: ["/analysis [pokemon], [generation] - Links to the Smogon University analysis for this Pok\u00e9mon in the given generation.",
-		"!analysis [pokemon], [generation] - Shows everyone this link. Requires: + % @ # & ~"],
+		"!analysis [pokemon], [generation] - Shows everyone this link. Requires: + $ % @ # & ~"],
 
 	veekun: function (target, broadcast, user) {
 		if (!this.canBroadcast()) return;
@@ -2502,7 +2500,7 @@ var commands = exports.commands = {
 		}
 	},
 	veekunhelp: ["/veekun [pokemon] - Links to Veekun website for this pokemon/item/move/ability/nature.",
-		"!veekun [pokemon] - Shows everyone this link. Requires: + % @ # & ~"],
+		"!veekun [pokemon] - Shows everyone this link. Requires: + $ % @ # & ~"],
 
 	register: function () {
 		if (!this.canBroadcast()) return;
