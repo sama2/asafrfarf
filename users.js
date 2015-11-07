@@ -419,6 +419,22 @@ function cacheGroupData() {
 		Config.groups = Object.create(null);
 		Config.groupsranking = [];
 	}
+	var groups = Config.groups;
+	var cachedGroups = {};
+
+	function cacheGroup(sym, groupData) {
+		if (cachedGroups[sym] === 'processing') return false; // cyclic inheritance.
+
+		if (cachedGroups[sym] !== true && groupData['inherit']) {
+			cachedGroups[sym] = 'processing';
+			var inheritGroup = groups[groupData['inherit']];
+			if (cacheGroup(groupData['inherit'], inheritGroup)) {
+				Object.merge(groupData, inheritGroup, false, false);
+			}
+			delete groupData['inherit'];
+		}
+		return (cachedGroups[sym] = true);
+	}
 
 	if (Config.grouplist) { // Using new groups format.
 		var grouplist = Config.grouplist;
@@ -433,8 +449,10 @@ function cacheGroupData() {
 
 	for (var sym in groups) {
 		var groupData = groups[sym];
+		cacheGroup(sym, groupData);
 	}
 }
+cacheGroupData();
 
 Users.setOfflineGroup = function (name, group, force) {
 	var userid = toId(name);
