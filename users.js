@@ -425,7 +425,7 @@ function cacheGroupData() {
 	function cacheGroup(sym, groupData) {
 		if (cachedGroups[sym] === 'processing') return false; // cyclic inheritance.
 
-		if (cachedGroups[sym] !== true && groupData['inherit']) {
+		if (cachedGroups[sym] !== true && groupData) {
 			cachedGroups[sym] = 'processing';
 			var inheritGroup = groups[groupData['inherit']];
 			if (cacheGroup(groupData['inherit'], inheritGroup)) {
