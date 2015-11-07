@@ -433,10 +433,8 @@ function cacheGroupData() {
 
 	for (var sym in groups) {
 		var groupData = groups[sym];
-		cacheGroup(sym, groupData);
 	}
 }
-cacheGroupData();
 
 Users.setOfflineGroup = function (name, group, force) {
 	var userid = toId(name);
